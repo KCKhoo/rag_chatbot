@@ -2,7 +2,7 @@
 
 ## Goals
 1. Develop a RAG chatbot to provide accurate answers to user queries using FAQs
-2. Create a Streamlit UI to interact with the chatbot in real-time
+2. Create a Streamlit UI to interact with the chatbot in real-time. Link: https://ragmalaychatbot.streamlit.app/
 
 ## Tech Stack
 - LLM: Google Gemini
@@ -36,7 +36,7 @@ HF_TOKEN=your_key_here
 GEMINI_API_KEY=your_key_here
 ```
 
-## How to Launch Streamlit
+## Steps for Launching Streamlit Locally
 
 1. Ensure the .env file is configured
 2. Launch Streamlit server by running the following terminal command from the root directory:
