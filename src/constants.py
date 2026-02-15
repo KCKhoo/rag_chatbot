@@ -10,9 +10,7 @@ DATA_FOLDER = "data"
 FAQ_FOLDER = "faq"
 
 HF_EMBEDDING_MODEL = "BAAI/bge-m3"
-GEMINI_MODEL = (
-    "gemini-2.5-flash-lite"  # This model is used because it has higher rate limit
-)
+GEMINI_MODEL = "gemini-2.5-flash-lite"
 
 PROMPT_TEMPLATE = """
 ### Role
