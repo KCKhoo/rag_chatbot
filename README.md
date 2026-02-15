@@ -1,4 +1,4 @@
-# Retrieval-Augmented Generation (RAG)Chatbot
+# Retrieval-Augmented Generation (RAG) Chatbot
 
 ## Goals
 1. Develop a RAG chatbot to provide accurate answers to user queries using FAQs
