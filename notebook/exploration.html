@@ -7800,7 +7800,8 @@ a.anchor-link {
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h1 id="RAG-Chatbot">RAG Chatbot<a class="anchor-link" href="#RAG-Chatbot">¶</a></h1><p>Introduction: Develop a RAG-based chatbot to answer user queries using a set of FAQs. It aims to enhance the customer experience by delivering timely and accurate responses that are consistent with FAQs</p>
 <p>Notebook Purpose: Exploratory and experimental work for designing the RAG pipeline.</p>
 <p>Task Breakdown:</p>
@@ -7829,12 +7830,45 @@ a.anchor-link {
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=9160b203">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=9160b203">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [1]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="n">parent_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="s1">'..'</span><span class="p">))</span>
+<span class="k">if</span> <span class="n">parent_dir</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
+    <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">parent_dir</span><span class="p">)</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">'display.max_colwidth'</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">haystack</span><span class="w"> </span><span class="kn">import</span> <span class="n">Document</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.module.document_ingestion_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">DocumentIngestionPipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.module.retrieval_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">RetrievalPipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.module.response_generation_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResponseGenerationPipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.module.rag_pipeline</span><span class="w"> </span><span class="kn">import</span> <span class="n">RAGPipeline</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_faqs</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.constants</span><span class="w"> </span><span class="kn">import</span> <span class="n">DATA_FOLDER</span><span class="p">,</span> <span class="n">FAQ_FOLDER</span><span class="p">,</span> <span class="n">PROMPT_TEMPLATE</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">data.test_data.test_data</span><span class="w"> </span><span class="kn">import</span> <span class="n">POS_QUES</span><span class="p">,</span> <span class="n">NEG_QUES</span>
+
+<span class="n">DATA_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">parent_dir</span><span class="p">,</span> <span class="n">DATA_FOLDER</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>/opt/miniconda3/envs/rag_malay/lib/python3.14/site-packages/tqdm/auto.py:21: TqdmWarning: IProgress not found. Please update jupyter and ipywidgets. See https://ipywidgets.readthedocs.io/en/stable/user_install.html
   from .autonotebook import tqdm as notebook_tqdm
@@ -7849,7 +7883,8 @@ PyTorch was not found. Models won't be available and only tokenizers, configurat
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="1.0-Data-Preparation">1.0 Data Preparation<a class="anchor-link" href="#1.0-Data-Preparation">¶</a></h2><h3 id="1.1-FAQ-Preparation">1.1 FAQ Preparation<a class="anchor-link" href="#1.1-FAQ-Preparation">¶</a></h3><p>Each FAQ in the provided Google Doc is separated into individual markdown files. Markdown is selected to preserve the hyperlink in one of the FAQs.</p>
 <p>Please refer to <code>data/faq</code> folder.</p>
 <h3 id="1.2-Test-Data-Preparation">1.2 Test Data Preparation<a class="anchor-link" href="#1.2-Test-Data-Preparation">¶</a></h3><p>Test data is created for evaluating the performance of the RAG chatbot in answering user queries. The test data must contain positive questions and negative questions</p>
@@ -7866,7 +7901,8 @@ PyTorch was not found. Models won't be available and only tokenizers, configurat
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="2.0-Document-Ingestion-Pipeline">2.0 Document Ingestion Pipeline<a class="anchor-link" href="#2.0-Document-Ingestion-Pipeline">¶</a></h2><h3 id="2.1-FAQ-preprocessing">2.1 FAQ preprocessing<a class="anchor-link" href="#2.1-FAQ-preprocessing">¶</a></h3><p>Since the FAQ content is already well-structured and clean, no cleaning or preprocessing was done.</p>
 <h3 id="2.2-Chunking-Strategy">2.2 Chunking Strategy<a class="anchor-link" href="#2.2-Chunking-Strategy">¶</a></h3><p>Skipped. Since the FAQs have already been separated into individual files in Step 1.1 (i.e. logically chunked at the document level), no additional chunking will be applied to each FAQ for the following reasons:</p>
 <ul>
@@ -7885,29 +7921,48 @@ PyTorch was not found. Models won't be available and only tokenizers, configurat
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=46984751">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=46984751">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [2]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">faqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">Document</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">faq</span><span class="p">)</span> <span class="k">for</span> <span class="n">faq</span> <span class="ow">in</span> <span class="n">load_faqs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA_DIR</span><span class="p">,</span> <span class="n">FAQ_FOLDER</span><span class="p">))]</span>
+<span class="n">indexing_pipeline</span> <span class="o">=</span> <span class="n">DocumentIngestionPipeline</span><span class="p">(</span><span class="n">hf_embedding_model</span><span class="o">=</span><span class="s2">"BAAI/bge-m3"</span><span class="p">)</span>
+<span class="n">vector_store</span> <span class="o">=</span> <span class="n">indexing_pipeline</span><span class="o">.</span><span class="n">create_vector_store</span><span class="p">(</span><span class="n">faqs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">vector_store</span><span class="o">.</span><span class="n">count_documents</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>`truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
-Calculating embeddings: 100%|██████████| 1/1 [00:00&lt;00:00,  1.01it/s]
+Calculating embeddings: 100%|██████████| 1/1 [00:00&lt;00:00,  1.03it/s]
 `truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
-Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00,  1.99s/it]
-100it [00:00, 13005.19it/s]          </pre>
+Calculating embeddings: 100%|██████████| 1/1 [00:02&lt;00:00,  2.35s/it]
+100it [00:00, 17232.85it/s]          </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>7
 </pre>
 </div>
 </div>
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>
 </pre>
@@ -7920,7 +7975,8 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Remark: Vector store with 7 documents/chunks is created successfully</p>
 </div>
 </div>
@@ -7930,19 +7986,53 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="3.0-RAG-Pipeline">3.0 RAG Pipeline<a class="anchor-link" href="#3.0-RAG-Pipeline">¶</a></h2><h3 id="3.1-Develop-retrieval-pipeline">3.1 Develop retrieval pipeline<a class="anchor-link" href="#3.1-Develop-retrieval-pipeline">¶</a></h3><p>Code can be found in <code>model/module/retrieval_pipeline.py</code></p>
 <p>A sample pipeline is created below to ensure the code can be run sucessfully</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs jp-mod-noInput" id="cell-id=4ef740da">
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=06f665d1">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs" id="cell-id=4ef740da">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [3]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">retrieval_pipeline</span> <span class="o">=</span> <span class="n">RetrievalPipeline</span><span class="p">(</span>
+    <span class="n">document_store</span><span class="o">=</span><span class="n">vector_store</span><span class="p">,</span> 
+    <span class="n">hf_embedding_model</span><span class="o">=</span><span class="s2">"BAAI/bge-m3"</span><span class="p">,</span>
+    <span class="n">top_k</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=06f665d1">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [4]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">retrieved_contexts</span> <span class="o">=</span> <span class="n">retrieval_pipeline</span><span class="o">.</span><span class="n">retrieve_contexts</span><span class="p">(</span><span class="n">query</span><span class="o">=</span><span class="s1">'How to subscribe'</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">doc</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">retrieved_contexts</span><span class="p">])</span>
+<span class="n">df</span><span class="p">[[</span><span class="s1">'content'</span><span class="p">,</span> <span class="s1">'score'</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>`truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
@@ -7950,6 +8040,7 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[4]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8001,7 +8092,8 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Remark: Retrieval pipeline is created successfully and 3 contexts are retrieved</p>
 </div>
 </div>
@@ -8011,7 +8103,8 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="3.2-Evaluate-embedding-models">3.2 Evaluate embedding models<a class="anchor-link" href="#3.2-Evaluate-embedding-models">¶</a></h3><p>As stated above, the following 2 embedding models are considered for this project:</p>
 <ul>
 <li>BAAI/bge-m3 | Max token: 8194</li>
@@ -8026,27 +8119,61 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=6c7bd194">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=6c7bd194">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [5]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">faqs</span> <span class="o">=</span> <span class="p">[</span><span class="n">Document</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="n">faq</span><span class="p">)</span> <span class="k">for</span> <span class="n">faq</span> <span class="ow">in</span> <span class="n">load_faqs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">DATA_DIR</span><span class="p">,</span> <span class="n">FAQ_FOLDER</span><span class="p">))]</span>
+
+<span class="c1"># Retrieval pipeline using BAAI/bge-m3</span>
+<span class="n">embedding_model</span> <span class="o">=</span> <span class="s2">"BAAI/bge-m3"</span>
+<span class="n">m3_indexing_pipeline</span> <span class="o">=</span> <span class="n">DocumentIngestionPipeline</span><span class="p">(</span><span class="n">hf_embedding_model</span><span class="o">=</span><span class="n">embedding_model</span><span class="p">)</span>
+<span class="n">m3_vector_store</span> <span class="o">=</span> <span class="n">m3_indexing_pipeline</span><span class="o">.</span><span class="n">create_vector_store</span><span class="p">(</span><span class="n">faqs</span><span class="p">)</span>
+<span class="n">m3_retrieval_pipeline</span> <span class="o">=</span> <span class="n">RetrievalPipeline</span><span class="p">(</span>
+    <span class="n">document_store</span><span class="o">=</span><span class="n">m3_vector_store</span><span class="p">,</span> 
+    <span class="n">hf_embedding_model</span><span class="o">=</span><span class="n">embedding_model</span><span class="p">,</span>
+    <span class="n">top_k</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+
+<span class="c1"># Retrieval pipeline using BAAI/bge-multilingual-gemma2</span>
+<span class="n">embedding_model</span> <span class="o">=</span> <span class="s2">"BAAI/bge-multilingual-gemma2"</span>
+<span class="n">gemma2_indexing_pipeline</span> <span class="o">=</span> <span class="n">DocumentIngestionPipeline</span><span class="p">(</span><span class="n">hf_embedding_model</span><span class="o">=</span><span class="n">embedding_model</span><span class="p">)</span>
+<span class="n">gemma2_vector_store</span> <span class="o">=</span> <span class="n">gemma2_indexing_pipeline</span><span class="o">.</span><span class="n">create_vector_store</span><span class="p">(</span><span class="n">faqs</span><span class="p">)</span>
+<span class="n">gemma2_retrieval_pipeline</span> <span class="o">=</span> <span class="n">RetrievalPipeline</span><span class="p">(</span>
+    <span class="n">document_store</span><span class="o">=</span><span class="n">gemma2_vector_store</span><span class="p">,</span> 
+    <span class="n">hf_embedding_model</span><span class="o">=</span><span class="n">embedding_model</span><span class="p">,</span>
+    <span class="n">top_k</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>`truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
-Calculating embeddings: 100%|██████████| 1/1 [00:00&lt;00:00,  2.98it/s]
+Calculating embeddings: 100%|██████████| 1/1 [00:00&lt;00:00,  2.32it/s]
 `truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
-Calculating embeddings: 100%|██████████| 1/1 [00:02&lt;00:00,  2.19s/it]
-100it [00:00, 12781.28it/s]          
+Calculating embeddings: 100%|██████████| 1/1 [00:02&lt;00:00,  2.07s/it]
+100it [00:00, 15506.32it/s]          
 `truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
-Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00,  1.11s/it]
+Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00,  1.07s/it]
 `truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
-Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00,  1.34s/it]
-100it [00:00, 5799.49it/s]           
+Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00,  1.37s/it]
+100it [00:00, 5982.63it/s]           
 </pre>
 </div>
 </div>
@@ -8057,17 +8184,44 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h4 id="3.2.1-Evaluate-%22BAAI/bge-m3%22">3.2.1 Evaluate "BAAI/bge-m3"<a class="anchor-link" href="#3.2.1-Evaluate-%22BAAI/bge-m3%22">¶</a></h4>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=b74b656e">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=b74b656e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [6]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">qna_pair</span> <span class="ow">in</span> <span class="n">POS_QUES</span><span class="p">:</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">qna_pair</span><span class="p">[</span><span class="s1">'Question'</span><span class="p">]</span>
+
+    <span class="n">m3_retrieved_context</span> <span class="o">=</span> <span class="n">m3_retrieval_pipeline</span><span class="o">.</span><span class="n">retrieve_contexts</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">doc</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">m3_retrieved_context</span><span class="p">])</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">'question'</span><span class="p">]</span> <span class="o">=</span> <span class="n">question</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'question'</span><span class="p">,</span> <span class="s1">'content'</span><span class="p">,</span> <span class="s1">'score'</span><span class="p">]]</span>
+    
+    <span class="n">df_output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_output</span><span class="p">,</span> <span class="n">df</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df_output</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>`truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
@@ -8079,6 +8233,7 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[6]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8170,7 +8325,8 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Findings for BAAI/bge-m3:</p>
 <ol>
 <li>For the question, "Lepas bayar, perlu buat apa untuk mula menonton?", the correct context is retrieved and ranked first</li>
@@ -8186,17 +8342,44 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h4 id="3.2.2-BAAI/bge-multilingual-gemma2">3.2.2 BAAI/bge-multilingual-gemma2<a class="anchor-link" href="#3.2.2-BAAI/bge-multilingual-gemma2">¶</a></h4>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=76beabbe">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=76beabbe">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+<span class="k">for</span> <span class="n">qna_pair</span> <span class="ow">in</span> <span class="n">POS_QUES</span><span class="p">:</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">qna_pair</span><span class="p">[</span><span class="s1">'Question'</span><span class="p">]</span>
+
+    <span class="n">m3_retrieved_context</span> <span class="o">=</span> <span class="n">gemma2_retrieval_pipeline</span><span class="o">.</span><span class="n">retrieve_contexts</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">doc</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">m3_retrieved_context</span><span class="p">])</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">'question'</span><span class="p">]</span> <span class="o">=</span> <span class="n">question</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">'question'</span><span class="p">,</span> <span class="s1">'content'</span><span class="p">,</span> <span class="s1">'score'</span><span class="p">]]</span>
+    
+    <span class="n">df_output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_output</span><span class="p">,</span> <span class="n">df</span><span class="p">],</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">df_output</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>`truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
@@ -8208,6 +8391,7 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[7]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8299,7 +8483,8 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Findings for BAAI/bge-multilingual-gemma2:</p>
 <ol>
 <li>For the question, "Lepas bayar, perlu buat apa untuk mula menonton?", the correct context is retrieved and ranked first</li>
@@ -8318,7 +8503,8 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Overall Takeaway:</p>
 <ol>
 <li>BAAI/bge-m3 is found to be a better embedding model for this given FAQ and thus, will be used for this project</li>
@@ -8332,18 +8518,39 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="3.3-Develop-response-generation-pipeline">3.3 Develop response generation pipeline<a class="anchor-link" href="#3.3-Develop-response-generation-pipeline">¶</a></h3><p>Code can be found in <code>model/module/response_generation_pipeline.py</code></p>
 <p>A sample pipeline is created below to ensure the code can be run sucessfully</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=880c98cd">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=880c98cd">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">response_generation_pipeline</span> <span class="o">=</span> <span class="n">ResponseGenerationPipeline</span><span class="p">(</span><span class="n">prompt_template</span><span class="o">=</span><span class="n">PROMPT_TEMPLATE</span><span class="p">)</span>
+<span class="n">question</span> <span class="o">=</span> <span class="s1">'Lepas bayar, perlu buat apa untuk mula menonton?'</span>
+<span class="n">m3_retrieved_context</span> <span class="o">=</span> <span class="n">m3_retrieval_pipeline</span><span class="o">.</span><span class="n">retrieve_contexts</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">response_generation_pipeline</span><span class="o">.</span><span class="n">generate_response</span><span class="p">(</span><span class="n">question</span><span class="p">,</span> <span class="n">m3_retrieved_context</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Question:</span><span class="se">\n</span><span class="si">{</span><span class="n">question</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Answer:</span><span class="se">\n</span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>`truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
@@ -8351,29 +8558,49 @@ Calculating embeddings: 100%|██████████| 1/1 [00:01&lt;00:00
 </div>
 </div>
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Question:
 Lepas bayar, perlu buat apa untuk mula menonton?
 
 Answer:
-Untuk mula menonton selepas membuat bayaran, sila ikuti langkah-langkah berikut untuk mengaktifkan langganan anda:
-1. Klik pada ikon 'setting' pada bahagian atas sebelah kiri (telefon bimbit) aplikasi Tonton atau sebelah kanan (komputer) laman web anda.
+Kami menyarankan anda supaya mengikuti langkah-langkah berikut untuk mengaktifkan langganan anda selepas bayaran dilakukan:
+1. Klik pada ikon 'setting' pada bahagian atas sebelah kiri (telefon bimbit) aplikasi Tonton atau sebelah kanan (komputer) laman web (website) anda.
 2. Pilih Tetapan Aplikasi (App Settings) daripada menu.
-3. Klik butang Akaun (Account).
-4. Klik butang Pembaharuan Kelayakan (Refresh Entitlement).
-5. Tunggu sehingga tanda ✅ muncul.
+3. Klik butang Akaun (Account)
+4. Klik butang Pembaharuan Kelayakan (Refresh Entitlement)
+5. Tunggu sehingga tanda ✅
 6. Klik logo Tonton untuk kembali ke laman utama.
 </pre>
 </div>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=0014d23b">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0014d23b">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">question</span> <span class="o">=</span> <span class="s1">'Contact kustomer servis'</span>
+<span class="n">m3_retrieved_context</span> <span class="o">=</span> <span class="n">m3_retrieval_pipeline</span><span class="o">.</span><span class="n">retrieve_contexts</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+<span class="n">answer</span> <span class="o">=</span> <span class="n">response_generation_pipeline</span><span class="o">.</span><span class="n">generate_response</span><span class="p">(</span><span class="n">question</span><span class="p">,</span> <span class="n">m3_retrieved_context</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Question:</span><span class="se">\n</span><span class="si">{</span><span class="n">question</span><span class="si">}</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Answer:</span><span class="se">\n</span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>`truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
@@ -8381,6 +8608,7 @@ Untuk mula menonton selepas membuat bayaran, sila ikuti langkah-langkah berikut 
 </div>
 </div>
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain" tabindex="0">
 <pre>Question:
 Contact kustomer servis
@@ -8397,7 +8625,8 @@ Tidak ada maklumat
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Remark: Response is generated successfully</p>
 </div>
 </div>
@@ -8407,19 +8636,38 @@ Tidak ada maklumat
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="3.4-Develop-RAG-pipeline">3.4 Develop RAG pipeline<a class="anchor-link" href="#3.4-Develop-RAG-pipeline">¶</a></h3><p>Combine retrieval pipeline and response generation pipeline into a single RAG pipeline</p>
 <p>Code can be found in <code>model/module/rag_pipeline.py</code></p>
 <p>A sample pipeline is created below to ensure the code can be run sucessfully</p>
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=0df7419c">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=0df7419c">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [10]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">rag_pipeline</span> <span class="o">=</span> <span class="n">RAGPipeline</span><span class="p">(</span>
+    <span class="n">m3_retrieval_pipeline</span><span class="p">,</span>
+    <span class="n">response_generation_pipeline</span>
+<span class="p">)</span>
+<span class="n">rag_pipeline</span><span class="o">.</span><span class="n">answer</span><span class="p">(</span><span class="n">question</span> <span class="o">=</span> <span class="s1">'Contact kustomer servis'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>`truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
@@ -8427,11 +8675,12 @@ Tidak ada maklumat
 </div>
 </div>
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[10]:</div>
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain" tabindex="0">
 <pre>{'status': 'success',
  'error_message': None,
  'question': 'Contact kustomer servis',
- 'answer': 'Tidak ada maklumat',
+ 'answer': 'Untuk maklumat lanjut, sila hubungi kami secara terus melalui saluran berikut:\n\n*   **Telefon Bimbit:**\n    1.  Pergi ke Tetapan (Settings) &gt; klik pada Akaun (Account) &gt; Klik pada Pembaharuan Kelayakan (Refresh Entitlements) &gt; Kemudian klik pada Urus Akaun (Manage account)\n    2.  Klik pada pelan langganan (Subscription Plan)\n    3.  Klik pada batalkan langganan berulang (Cancel Recurring Subscription)\n*   **Laman Web (Website):**\n    1.  Log masuk ke Akaun (Account) &gt; Klik pada Tetapan (Settings) &gt; Pilih Akaun (Account)\n    2.  Pergi ke pelan langganan (Subscription Plan)\n    3.  Klik pada batalkan langganan berulang (Cancel Recurring Subscription)\n\nJika anda menghadapi masalah untuk membatalkan langganan anda, sila sertakan resit pembayaran terkini dan butiran berikut untuk kami menyemak dengan lebih lanjut dan melakukan pembatalan manual daripada sistem kami:\n*   Alamat E-mel Berdaftar\n*   Nombor Telefon Berdaftar\n\nSila ambil perhatian, permohonan pembatalan langganan hendaklah dilakukan selewat-lewatnya 5 hari sebelum tarikh tamat langganan anda.',
  'context': [Document(id=521ef9da5948ead1551754de08c5d487c4bcef434f5fd83f9bf2b4bdc22e95a0, content: 'Question: Mengapa ralat muncul di skrin semasa saya menikmati Tonton?
   
   Answer: Jika anda ingin menga...', score: 0.45108008611247363),
@@ -8449,7 +8698,8 @@ Tidak ada maklumat
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Remark: Response is generated successfully</p>
 </div>
 </div>
@@ -8459,7 +8709,8 @@ Tidak ada maklumat
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h3 id="Evaluate-RAG-performance">Evaluate RAG performance<a class="anchor-link" href="#Evaluate-RAG-performance">¶</a></h3><p>A RAG consists of 3 important elements, which are the query, the context and the answer. Systematic evaluation involves analyzing the relationships between these pairs:</p>
 <ol>
 <li>Faithfulness / Hallucination (Answer &lt;&gt; Context): Evaluate whether the answer is generated solely based on the retrieved context</li>
@@ -8471,12 +8722,38 @@ Tidak ada maklumat
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=3a2784f8">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=3a2784f8">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [11]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"question"</span><span class="p">:</span> <span class="p">[],</span>
+    <span class="s2">"answer"</span><span class="p">:</span> <span class="p">[]</span>
+<span class="p">}</span>
+
+<span class="k">for</span> <span class="n">qna_pair</span> <span class="ow">in</span> <span class="n">POS_QUES</span> <span class="o">+</span> <span class="n">NEG_QUES</span><span class="p">:</span>
+    <span class="n">question</span> <span class="o">=</span> <span class="n">qna_pair</span><span class="p">[</span><span class="s1">'Question'</span><span class="p">]</span>
+    <span class="n">rag_output</span> <span class="o">=</span> <span class="n">rag_pipeline</span><span class="o">.</span><span class="n">answer</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+
+    <span class="n">output</span><span class="p">[</span><span class="s2">"question"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">question</span><span class="p">)</span>
+    <span class="n">output</span><span class="p">[</span><span class="s2">"answer"</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rag_output</span><span class="p">[</span><span class="s1">'answer'</span><span class="p">])</span>
+    
+<span class="n">df_output</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">output</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child">
+<div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr" tabindex="0">
 <pre>`truncate` parameter is not supported for Serverless Inference API. It will be ignored.
 `normalize` parameter is not supported for Serverless Inference API. It will be ignored.
@@ -8495,12 +8772,26 @@ Tidak ada maklumat
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noInput" id="cell-id=24a5e5d6">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell" id="cell-id=24a5e5d6">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In [12]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+<div class="cm-editor cm-s-jupyter">
+<div class="highlight hl-ipython3"><pre><span></span><span class="n">df_output</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
 <div class="jp-Cell-outputWrapper">
 <div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
 </div>
 <div class="jp-OutputArea jp-Cell-outputArea">
 <div class="jp-OutputArea-child jp-OutputArea-executeResult">
+<div class="jp-OutputPrompt jp-OutputArea-prompt">Out[12]:</div>
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/html" tabindex="0">
 <div>
 <style scoped="">
@@ -8528,17 +8819,17 @@ Tidak ada maklumat
 <tr>
 <th>0</th>
 <td>Lepas bayar, perlu buat apa untuk mula menonton?</td>
-<td>Untuk mengaktifkan langganan anda selepas bayaran, sila ikuti langkah-langkah berikut:\n1. Klik pada ikon 'setting' pada bahagian atas sebelah kiri (telefon bimbit) aplikasi Tonton atau sebelah kanan (komputer) laman web anda.\n2. Pilih Tetapan Aplikasi (App Settings) daripada menu.\n3. Klik butang Akaun (Account).\n4. Klik butang Pembaharuan Kelayakan (Refresh Entitlement).\n5. Tunggu sehingga tanda ✅ muncul.\n6. Klik logo Tonton untuk kembali ke laman utama.</td>
+<td>Kami menyarankan anda supaya mengikuti langkah-langkah berikut untuk mengaktifkan langganan anda selepas bayaran dilakukan:\n1. Klik pada ikon 'setting' pada bahagian atas sebelah kiri (telefon bimbit) aplikasi Tonton atau sebelah kanan (komputer) laman web (website) anda.\n2. Pilih Tetapan Aplikasi (App Settings) daripada menu.\n3. Klik butang Akaun (Account).\n4. Klik butang Pembaharuan Kelayakan (Refresh Entitlement).\n5. Tunggu sehingga tanda ✅.\n6. Klik logo Tonton untuk kembali ke laman utama.</td>
 </tr>
 <tr>
 <th>1</th>
 <td>Reset password</td>
-<td>Kami mencadangkan anda untuk membuat tetapan semula kata laluan, kemudian log masuk semula.\n\nAnda boleh ke pautan di bawah bagi menetapkan semula kata laluan bagi akaun anda - [Laman](https://oauth.revmedia.my/forgot?client_id=551835651455588&amp;redirect_uri=https%3A%2F%2Fheadend-api.tonton.com.my%2Fv100%2Fapi%2Fauth.class.api.php%2Fcallback&amp;response_type=code&amp;code_challenge=DJfXvpi3ZqdivuoclgDAwSuLyMfyNwkz4cbtfzt_vU8&amp;code_challenge_method=S256&amp;state=TONTON_web.B3Wa0gmr3pAG8zKMqutaT2bXabyU01RB)</td>
+<td>Sila ikuti pautan di bawah untuk menetapkan semula kata laluan anda: [Laman](https://oauth.revmedia.my/forgot?client_id=551835651455588&amp;redirect_uri=https%3A%2F%2Fheadend-api.tonton.com.my%2Fv100%2Fapi%2Fauth.class.api.php%2Fcallback&amp;response_type=code&amp;code_challenge=DJfXvpi3ZqdivuoclgDAwSuLyMfyNwkz4cbtfzt_vU8&amp;code_challenge_method=S256&amp;state=TONTON_web.B3Wa0gmr3pAG8zKMqutaT2bXabyU01RB)</td>
 </tr>
 <tr>
 <th>2</th>
 <td>Skrin tunjuk error code</td>
-<td>Saya difahamkan anda mengalami masalah kod ralat pada skrin. Untuk mengatasi masalah ini, anda boleh mengaktifkan semula langganan anda untuk kandungan eksklusif dengan melawati pautan ini: https://www.tonton.com.my/tontonup.\n\nSila ikuti langkah-langkah berikut:\n1. Klik pada ruangan "SUBSCRIBE NOW" di bahagian atas sekali untuk meneruskan proses langganan dan pembayaran.\n2. Pilih kaedah pembayaran pilihan anda dan ikuti arahan seterusnya.\n3. Selepas membuat pembayaran, kami mencadangkan anda untuk klik butang "Pembaharuan".\n\nSekiranya masalah masih berterusan, sila cuba langkah-langkah berikut untuk mengaktifkan langganan anda selepas bayaran dilakukan:\n1. Klik pada ikon 'setting' pada bahagian atas sebelah kiri (telefon bimbit) aplikasi Tonton atau sebelah kanan (komputer) laman web anda.\n2. Pilih Tetapan Aplikasi (App Settings) daripada menu.\n3. Klik butang Akaun (Account).\n4. Klik butang Pembaharuan Kelayakan (Refresh Entitlement).\n5. Tunggu sehingga tanda ✅ muncul.\n6. Klik logo Tonton untuk kembali ke laman utama.</td>
+<td>Jika ralat muncul di skrin semasa anda menikmati Tonton, anda boleh melawati pautan ini https://www.tonton.com.my/tontonup untuk menaik taraf akaun anda. Sila klik ke ruangan "SUBSCRIBE NOW" di bahagian ATAS sekali untuk meneruskan proses langganan dan pembayaran. Sila pilih kaedah pembayaran pilihan anda dan ikuti arahan seterusnya. Sebaik sahaja anda telah membuat pembayaran langganan, kami mencadangkan anda untuk klik butang Pembaharuan.</td>
 </tr>
 <tr>
 <th>3</th>
@@ -8567,8 +8858,31 @@ Tidak ada maklumat
 <div class="jp-Cell-inputWrapper" tabindex="0">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <p>Findings: Correct response is generated for the test question</p>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell" id="cell-id=e02f4e9e">
+<div class="jp-Cell-inputWrapper" tabindex="0">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
+<h2 id="Future-Improvements">Future Improvements<a class="anchor-link" href="#Future-Improvements">¶</a></h2><h3 id="Short-Term">Short-Term<a class="anchor-link" href="#Short-Term">¶</a></h3><ol>
+<li>Add citation link for every answer to increase user trust in the answer</li>
+<li>Add LLM guardrails to prevent the chatbot from answering malicious question or providing biased answer</li>
+<li>Develop a systematic evaluation of the RAG</li>
+<li>Built an automated document ingestion pipeline that ingest documents automatically whenever it detects FAQ updates</li>
+</ol>
+<h3 id="Long-Term">Long-Term<a class="anchor-link" href="#Long-Term">¶</a></h3><ol>
+<li>Apply semantic cache to answer similar questions that have been answered before in order to reduce cost and response time</li>
+<li>Introduce conversational memory</li>
+<li>Agentic RAG, i.e. if the question is a legitimate question and cannot be answered using the FAQs, search information online to answer the question</li>
+<li>Personalised RAG, i.e. provide a personalised answer to users based on their product usage and personal data</li>
+</ol>
 </div>
 </div>
 </div>
