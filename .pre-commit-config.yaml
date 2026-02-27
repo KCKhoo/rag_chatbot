@@ -13,3 +13,11 @@ repos:
     rev: v1.19.1
     hooks:
       - id: mypy
+        additional_dependencies: [
+          "types-requests", 
+          "python-dotenv",
+          "haystack-ai",
+          "qdrant-haystack",
+          "streamlit",
+        ]
+        

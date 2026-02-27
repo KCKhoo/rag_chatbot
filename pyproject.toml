@@ -1,3 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rag_chatbot"            # distribution name
+version = "0.1.0"
+requires-python = ">=3.14"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
 [tool.ruff]
 line-length = 88
 target-version = "py314"
@@ -9,5 +24,7 @@ ignore = ["E501", "B008"]
 
 [tool.mypy]
 python_version = "3.14"
+explicit_package_bases = true
+mypy_path = "src"
 strict = true
 show_error_codes = true
