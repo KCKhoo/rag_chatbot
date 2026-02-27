@@ -1,18 +1,20 @@
 import os
+
 import streamlit as st
 from haystack import Document
-from src.module.document_ingestion_pipeline import DocumentIngestionPipeline
-from src.module.retrieval_pipeline import RetrievalPipeline
-from src.module.response_generation_pipeline import ResponseGenerationPipeline
-from src.module.rag_pipeline import RAGPipeline
-from src.utils import load_faqs
-from src.constants import DATA_FOLDER, FAQ_FOLDER, HF_EMBEDDING_MODEL, PROMPT_TEMPLATE
+
+from constants import DATA_FOLDER, FAQ_FOLDER, HF_EMBEDDING_MODEL, PROMPT_TEMPLATE
+from module.document_ingestion_pipeline import DocumentIngestionPipeline
+from module.rag_pipeline import RAGPipeline
+from module.response_generation_pipeline import ResponseGenerationPipeline
+from module.retrieval_pipeline import RetrievalPipeline
+from utils import load_faqs
 
 st.set_page_config(page_title="Chatbot", page_icon="💬", layout="centered")
 
 
 @st.cache_resource(show_spinner="Initializing RAG Engine...")
-def get_rag_pipeline():
+def get_rag_pipeline() -> RAGPipeline | None:
     """Initializes and caches the RAG pipeline. Only run once when the app starts"""
     try:
         # Load and ingest FAQs
