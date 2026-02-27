@@ -1,10 +1,12 @@
-from haystack import Pipeline
+from typing import cast
+
+from haystack import Document, Pipeline
 from haystack.components.embedders import HuggingFaceAPITextEmbedder
 from haystack.utils import Secret
 from haystack_integrations.components.retrievers.qdrant import QdrantEmbeddingRetriever
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
 
-from src.constants import HF_TOKEN, HF_EMBEDDING_MODEL
+from constants import HF_EMBEDDING_MODEL, HF_TOKEN
 
 
 class RetrievalPipeline:
@@ -45,8 +47,10 @@ class RetrievalPipeline:
 
         return retrieval_pipeline
 
-    def retrieve_contexts(self, query: str):
+    def retrieve_contexts(self, query: str) -> list[Document]:
         """Retrieve top K relevant context for a given query"""
-        return self.pipeline.run({"retrieval_embedder": {"text": query}})["retriever"][
-            "documents"
-        ]
+        contexts = self.pipeline.run({"retrieval_embedder": {"text": query}})[
+            "retriever"
+        ]["documents"]
+
+        return cast(list[Document], contexts)

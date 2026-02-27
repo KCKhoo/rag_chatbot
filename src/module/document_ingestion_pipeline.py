@@ -4,8 +4,8 @@ from haystack.components.writers import DocumentWriter
 from haystack.document_stores.types import DuplicatePolicy
 from haystack.utils import Secret
 from haystack_integrations.document_stores.qdrant import QdrantDocumentStore
-from typing import List
-from src.constants import HF_TOKEN, HF_EMBEDDING_MODEL
+
+from constants import HF_EMBEDDING_MODEL, HF_TOKEN
 
 
 class DocumentIngestionPipeline:
@@ -34,7 +34,7 @@ class DocumentIngestionPipeline:
 
         self.pipeline = self._create_pipeline()
 
-    def _compute_embedding_dim(self):
+    def _compute_embedding_dim(self) -> int:
         """Runs a single dummy document through the embedding model to find the embedding size."""
 
         result = self.embedder.run([Document(content="a")])
@@ -55,7 +55,7 @@ class DocumentIngestionPipeline:
 
         return indexing_pipeline
 
-    def create_vector_store(self, documents: List[Document]):
+    def create_vector_store(self, documents: list[Document]) -> QdrantDocumentStore:
         """Ingests documents into the vector store."""
 
         self.pipeline.run({"indexing_embedder": {"documents": documents}})
