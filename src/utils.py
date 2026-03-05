@@ -1,8 +1,7 @@
 from pathlib import Path
-from typing import List
 
 
-def load_faqs(faq_folder_path: str) -> List[str]:
+def load_faqs(faq_folder_path: str) -> list[str]:
     """
     Load FAQ documents in Markdown format from a specified folder
 

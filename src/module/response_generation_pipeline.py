@@ -1,9 +1,10 @@
 import json
+from typing import cast
+
 import requests
-from typing import List
 from haystack import Document
 
-from src.constants import GEMINI_API_KEY, GEMINI_MODEL
+from constants import GEMINI_API_KEY, GEMINI_MODEL
 
 
 class ResponseGenerationPipeline:
@@ -16,7 +17,7 @@ class ResponseGenerationPipeline:
         self.timeout = timeout
 
     @staticmethod
-    def aggregate_context(context: List[Document]) -> str:
+    def aggregate_context(context: list[Document]) -> str:
         """
         Combine all the retrieved contexts into a single string
 
@@ -39,7 +40,7 @@ class ResponseGenerationPipeline:
     def generate_response(
         self,
         question: str,
-        context: List[Document],
+        context: list[Document],
     ) -> str:
 
         agg_context = self.aggregate_context(context)
@@ -64,4 +65,4 @@ class ResponseGenerationPipeline:
         )
         data = resp.json()
 
-        return data["candidates"][0]["content"]["parts"][0]["text"]
+        return cast(str, data["candidates"][0]["content"]["parts"][0]["text"])

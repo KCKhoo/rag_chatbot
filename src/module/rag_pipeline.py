@@ -1,5 +1,7 @@
-from src.module.retrieval_pipeline import RetrievalPipeline
-from src.module.response_generation_pipeline import ResponseGenerationPipeline
+from typing import Any
+
+from module.response_generation_pipeline import ResponseGenerationPipeline
+from module.retrieval_pipeline import RetrievalPipeline
 
 
 class RAGPipeline:
@@ -17,7 +19,7 @@ class RAGPipeline:
         self.retrieval_pipeline = retrieval_pipeline
         self.response_generation_pipeline = response_generation_pipeline
 
-    def answer(self, question: str) -> str:
+    def answer(self, question: str) -> dict[str, Any]:
         """Answer user question"""
 
         try:
